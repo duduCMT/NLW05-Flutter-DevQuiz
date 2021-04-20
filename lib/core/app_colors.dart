@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//O '#' do hexadecimal deve ser substituido por 0xFF
 class AppColors {
   static final Color purple = Color(0xFF8257E5);
   static final Color white = Color(0xFFFFFFFF);
