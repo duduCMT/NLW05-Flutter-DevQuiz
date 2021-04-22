@@ -1,0 +1,28 @@
+[
+    {
+        "title": "Título do Quiz :3",
+        "imagem": "blocks", 
+        "questionsAwsored": 1,
+        "level": "facil", 
+        "questions": [
+            {
+                "title": "E um pais da Europa, seu idioma é o Holandês:", 
+                "awnsers": [
+                    {"titile": "Itália"},
+                    {"titile": "França"},
+                    {"titile": "Roma"},
+                    {"titile": "Erou!", "isRight": true}
+                ]
+            },
+            {
+                "title": "Senhor, qual o seu nome?", 
+                "awnsers": [
+                    {"titile": "Irineu, você não sabe nem eu", "isRight": true},
+                    {"titile": "Jessica"},
+                    {"titile": "Joana"},
+                    {"titile": "Jennifer"}
+                ]
+            }
+        ]
+    }
+]
