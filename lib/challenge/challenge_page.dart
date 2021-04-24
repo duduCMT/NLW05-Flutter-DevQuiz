@@ -22,65 +22,77 @@ class _ChallengePageState extends State<ChallengePage> {
   @override
   void initState() {
     pageController.addListener(() {
-        controller.currentQuestion = pageController.page!.toInt() + 1;
+      controller.currentQuestion = pageController.page!.toInt() + 1;
     });
+  }
+
+  void nextPage() {
+    if(controller.currentQuestion < widget.questions.length){
+        pageController.nextPage(
+        duration: Duration(milliseconds: 200), curve: Curves.linear);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize( 
+      appBar: PreferredSize(
         preferredSize: Size.fromHeight(86),
         child: SafeArea(
-          top: true, 
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              BackButton(),
-              ValueListenableBuilder<int>(
-                valueListenable: controller.currentQuentionNotifier, 
-                builder: (context, value, _) => QuestionIndicatorWidget(
-                  currentQuestion: value, 
-                  lenght: widget.questions.length,
-                )
-              ),
-            ],
-          )
-        ),
+            top: true,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                BackButton(),
+                ValueListenableBuilder<int>(
+                    valueListenable: controller.currentQuentionNotifier,
+                    builder: (context, value, _) => QuestionIndicatorWidget(
+                          currentQuestion: value,
+                          lenght: widget.questions.length,
+                        )),
+              ],
+            )),
       ),
       body: PageView(
         physics: NeverScrollableScrollPhysics(),
         controller: pageController,
-        children: widget.questions.map((e) => QuizWidget(question: e)).toList(),
+        children: widget.questions
+            .map((e) => QuizWidget(
+                  question: e,
+                  onChange: () {
+                    Future.delayed(Duration(milliseconds: 1500))
+                        .then((value) => nextPage());
+                  },
+                ))
+            .toList(),
       ),
       bottomNavigationBar: SafeArea(
         bottom: true,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Expanded(
-                child: NextButtonWidget.white(
-                  label: 'Pular',
-                  onTap: (){
-                    pageController.nextPage(
-                      duration: Duration(milliseconds: 200),
-                       curve: Curves.linear
-                    );
-                  },
-                ),
-              ),
-              SizedBox(width: 7),
-              Expanded(
-                child: NextButtonWidget.green(
-                  label: 'Confirmar',
-                  onTap: (){
-                    print('Teste Confirmar');
-                  },
-                ),
-              )
-            ],
+          child: ValueListenableBuilder<int>(
+            valueListenable: controller.currentQuentionNotifier,
+            builder: (context, value, _) => Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                (value < widget.questions.length) ?
+                Expanded(
+                  child: NextButtonWidget.white(
+                    label: 'Pular',
+                    onTap: nextPage,
+                  ),
+                ) :
+                Expanded(
+                  child: NextButtonWidget.green(
+                    label: 'Finalizar',
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                )
+                
+              ],
+            ),
           ),
         ),
       ),
