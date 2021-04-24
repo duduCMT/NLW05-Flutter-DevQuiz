@@ -36,4 +36,8 @@ class AppColors {
   static final Color levelButtonTextMedio = darkGreen;
   static final Color levelButtonTextDificil = Color(0xFFE8891C);
   static final Color levelButtonTextPerito = darkRed;
+
+  //Overlays
+  static final Color overlayDarkGreen = Color.fromARGB(20, 4, 211, 97);
+  static final Color overlayDark = Color.fromARGB(10, 0, 0, 0);
 }
