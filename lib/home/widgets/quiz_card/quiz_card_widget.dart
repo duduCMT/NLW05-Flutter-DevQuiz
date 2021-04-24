@@ -11,58 +11,61 @@ class QuizCardWidget extends StatelessWidget {
   final int quantityQuestions;
   double percent = 0;
 
+  final VoidCallback onTap;
+
   QuizCardWidget({
     Key? key,
     required this.title,
     required this.completed,
     required this.quantityQuestions,
-  }){
+    required this.onTap,
+  }) {
     this.percent = this.completed / this.quantityQuestions;
   }
 
-
-  
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        border: Border.fromBorderSide(BorderSide(color: AppColors.border)),
-        borderRadius: BorderRadius.circular(10),
-        color: AppColors.white,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          border: Border.fromBorderSide(BorderSide(color: AppColors.border)),
+          borderRadius: BorderRadius.circular(10),
+          color: AppColors.white,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 40,
+              width: 40,
+              child: Image.asset(AppImages.blocks),
+            ),
+            SizedBox(height: 18,),
+            Text(
+              title,
+              style: AppTextStyles.heading15,
+            ),
+            SizedBox(height: 18,),
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Text(
+                    '$completed/$quantityQuestions', 
+                    style:  AppTextStyles.body11,
+                  )
+                ),
+                Expanded(
+                  flex: 3,
+                  child: ProgressIndicatorWidget(value: percent),
+                )  
+              ],
+            )
+          ],
+        ),  
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: 40,
-            width: 40,
-            child: Image.asset(AppImages.blocks),
-          ),
-          SizedBox(height: 18,),
-          Text(
-            title,
-            style: AppTextStyles.heading15,
-          ),
-          SizedBox(height: 18,),
-          Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Text(
-                  '$completed/$quantityQuestions', 
-                  style:  AppTextStyles.body11,
-                )
-              ),
-              Expanded(
-                flex: 3,
-                child: ProgressIndicatorWidget(value: percent),
-              )  
-            ],
-          )
-        ],
-      ),  
     );
   }
 }

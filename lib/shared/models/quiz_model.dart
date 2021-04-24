@@ -38,9 +38,6 @@ class QuizModel {
     required this.level,
   });
 
-
-
-
   Map<String, dynamic> toMap() {
     return {
       'title': title,

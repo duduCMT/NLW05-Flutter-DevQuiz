@@ -8,19 +8,19 @@
             {
                 "title": "E um pais da Europa, seu idioma é o Holandês:", 
                 "awnsers": [
-                    {"titile": "Itália"},
-                    {"titile": "França"},
-                    {"titile": "Roma"},
-                    {"titile": "Erou!", "isRight": true}
+                    {"title": "Itália"},
+                    {"title": "França"},
+                    {"title": "Roma"},
+                    {"title": "Erou!", "isRight": true}
                 ]
             },
             {
                 "title": "Senhor, qual o seu nome?", 
                 "awnsers": [
-                    {"titile": "Irineu, você não sabe nem eu", "isRight": true},
-                    {"titile": "Jessica"},
-                    {"titile": "Joana"},
-                    {"titile": "Jennifer"}
+                    {"title": "Irineu, você não sabe nem eu", "isRight": true},
+                    {"title": "Jessica"},
+                    {"title": "Joana"},
+                    {"title": "Jennifer"}
                 ]
             }
         ]
