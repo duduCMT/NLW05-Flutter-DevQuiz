@@ -21,9 +21,6 @@ class _ChallengePageState extends State<ChallengePage> {
 
   @override
   void initState() {
-    controller.currentQuentionNotifier.addListener(() {
-      setState(() {});  
-    });
     pageController.addListener(() {
         controller.currentQuestion = pageController.page!.toInt() + 1;
     });
@@ -40,15 +37,19 @@ class _ChallengePageState extends State<ChallengePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               BackButton(),
-              QuestionIndicatorWidget(
-                currentQuestion: controller.currentQuestion,
-                lenght: widget.questions.length,
+              ValueListenableBuilder<int>(
+                valueListenable: controller.currentQuentionNotifier, 
+                builder: (context, value, _) => QuestionIndicatorWidget(
+                  currentQuestion: value, 
+                  lenght: widget.questions.length,
+                )
               ),
             ],
           )
         ),
       ),
       body: PageView(
+        physics: NeverScrollableScrollPhysics(),
         controller: pageController,
         children: widget.questions.map((e) => QuizWidget(question: e)).toList(),
       ),
@@ -63,7 +64,10 @@ class _ChallengePageState extends State<ChallengePage> {
                 child: NextButtonWidget.white(
                   label: 'Pular',
                   onTap: (){
-                    print('Teste Pular');
+                    pageController.nextPage(
+                      duration: Duration(milliseconds: 200),
+                       curve: Curves.linear
+                    );
                   },
                 ),
               ),
