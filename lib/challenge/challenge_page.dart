@@ -34,22 +34,35 @@ class _ChallengePageState extends State<ChallengePage> {
   }
 
   void nextPage(bool isRigth) {
+    if (isRigth) {
+      controller.qtdCurrectAnswers++;
+    }
+
+    if (controller.currentQuestion < widget.questions.length) {
+      pageController.nextPage(
+          duration: Duration(milliseconds: 200), curve: Curves.linear);
+    }
+  }
+
+  void nextPageJumpQuestion() {
     if(!controller.nextPageRunning){
       controller.nextPageRunning = true;
-
-      if(isRigth){
-        controller.qtdCurrectAnswers++;
-      }
-
-      if(controller.currentQuestion < widget.questions.length){
-          pageController.nextPage(
-          duration: Duration(milliseconds: 200), curve: Curves.linear);
-      }
-
+      nextPage(false);
       controller.nextPageRunning = false;
     }
   }
 
+  void nextPageAwnsered(bool isRigth) {
+    if(!controller.nextPageRunning){
+      controller.nextPageRunning = true;
+
+      Future.delayed(Duration(milliseconds: 500))
+          .then((value) => nextPage(isRigth));
+
+      controller.nextPageRunning = false;
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,14 +89,10 @@ class _ChallengePageState extends State<ChallengePage> {
         children: widget.questions
             .map((e) => QuizWidget(
                   question: e,
-                  onSelected: (isRigth) {
-                    Future.delayed(Duration(milliseconds: 1500))
-                        .then((value) => nextPage(isRigth));
-                  },
+                  onSelected: (isRigth) => nextPageAwnsered(isRigth),
                 ))
             .toList(),
       ),
-
       bottomNavigationBar: SafeArea(
         bottom: true,
         child: Padding(
@@ -93,33 +102,30 @@ class _ChallengePageState extends State<ChallengePage> {
             builder: (context, value, _) => Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                (value < widget.questions.length) ?
-                Expanded(
-                  child: NextButtonWidget.white(
-                    label: 'Pular',
-                    onTap: (){
-                      nextPage(false);
-                    },
-                  ),
-                ) :
-                Expanded(
-                  child: NextButtonWidget.green(
-                    label: 'Finalizar',
-                    onTap: () {
-                      Navigator.pushReplacement(
-                        context, 
-                        MaterialPageRoute(
-                          builder: (context) => ResultPage(
-                            title: widget.title,
-                            length: widget.questions.length,
-                            result: controller.qtdCurrectAnswers,
-                          )
-                        )
-                      );
-                    },
-                  ),
-                )
-                
+                (value < widget.questions.length)
+                    ? Expanded(
+                        child: NextButtonWidget.white(
+                          label: 'Pular',
+                          onTap: () {
+                            nextPageJumpQuestion();
+                          },
+                        ),
+                      )
+                    : Expanded(
+                        child: NextButtonWidget.green(
+                          label: 'Finalizar',
+                          onTap: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ResultPage(
+                                          title: widget.title,
+                                          length: widget.questions.length,
+                                          result: controller.qtdCurrectAnswers,
+                                        )));
+                          },
+                        ),
+                      )
               ],
             ),
           ),
