@@ -8,9 +8,14 @@ class LevelButtonWidget extends StatelessWidget {
 
   LevelButtonWidget({
     Key? key, required this.label, required this.onTap
-  }) : assert(["Fácil", "Médio", "Difícil", "Perito"].contains(label)), super(key: key);
+  }) : assert(["Todos", "Fácil", "Médio", "Difícil", "Perito"].contains(label)), super(key: key);
 
   final config = {
+    "Todos": {
+      "color": AppColors.levelButtonTodos,
+      "borderColor": AppColors.levelButtonBorderTodos,
+      "fontColor": AppColors.levelButtonTextTodos
+    },
     "Fácil": {
       "color": AppColors.levelButtonFacil,
       "borderColor": AppColors.levelButtonBorderFacil,
@@ -42,6 +47,7 @@ class LevelButtonWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 2),
         decoration: BoxDecoration( 
           borderRadius: BorderRadius.circular(28),
           color: color,
@@ -49,11 +55,13 @@ class LevelButtonWidget extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 23, vertical: 6),
-          child: Text(
-            label, 
-            style: GoogleFonts.notoSans(
-              color: fontColor,
-              fontSize: 13
+          child: Center(
+            child: Text(
+              label, 
+              style: GoogleFonts.notoSans(
+                color: fontColor,
+                fontSize: 13,
+              ),
             ),
           ),
         ),   

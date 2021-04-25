@@ -22,16 +22,19 @@ class AppColors {
   static final Color darkRed = Color(0xFFCC3750);
 
   //LevelButton
+  static final Color levelButtonTodos = Color.fromARGB(50, 130, 87, 229);
   static final Color levelButtonFacil = Color(0xFFEBEBFC);
   static final Color levelButtonMedio = lightGreen;
   static final Color levelButtonDificil = Color(0xFFF5EFE9);
   static final Color levelButtonPerito = lightRed;
 
+  static final Color levelButtonBorderTodos = purple;
   static final Color levelButtonBorderFacil = Color(0xFFCECEF5);
   static final Color levelButtonBorderMedio = green;
   static final Color levelButtonBorderDificil = Color(0xFFE5D5C5);
   static final Color levelButtonBorderPerito = red;
 
+  static final Color levelButtonTextTodos = purple;
   static final Color levelButtonTextFacil = Color(0xFF6363DB);
   static final Color levelButtonTextMedio = darkGreen;
   static final Color levelButtonTextDificil = Color(0xFFE8891C);

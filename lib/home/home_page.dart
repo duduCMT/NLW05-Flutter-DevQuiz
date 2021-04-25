@@ -37,10 +37,11 @@ class _HomePageState extends State<HomePage> {
         body: Column(
           children: [ 
             SizedBox(height: 24,),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Container(
+              height: 32,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.symmetric(horizontal: 14),
                 children: [
                   LevelButtonWidget(
                     label: 'Fácil',
@@ -57,6 +58,10 @@ class _HomePageState extends State<HomePage> {
                   LevelButtonWidget(
                     label: 'Perito',
                     onTap: () => controller.getQuizzesByLvl(Level.perito),
+                  ),
+                  LevelButtonWidget(
+                    label: 'Todos',
+                    onTap: () => controller.getQuizzes(),
                   ),
                 ],
               ),
