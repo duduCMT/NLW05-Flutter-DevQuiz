@@ -1,15 +1,22 @@
+import 'package:flutter/material.dart';
+
 import 'package:DevQuiz/challenge/challenge_controller.dart';
 import 'package:DevQuiz/challenge/widgets/next_button/next_button_widget.dart';
 import 'package:DevQuiz/challenge/widgets/question_indicator/question_indicator_widget.dart';
 import 'package:DevQuiz/challenge/widgets/quiz/quiz_widget.dart';
 import 'package:DevQuiz/core/app_colors.dart';
+import 'package:DevQuiz/result/result_page.dart';
 import 'package:DevQuiz/shared/models/question_model.dart';
-import 'package:flutter/material.dart';
 
 class ChallengePage extends StatefulWidget {
   final List<QuestionModel> questions;
+  final String title;
 
-  const ChallengePage({Key? key, required this.questions}) : super(key: key);
+  const ChallengePage({
+    Key? key,
+    required this.questions,
+    required this.title,
+  }) : super(key: key);
 
   @override
   _ChallengePageState createState() => _ChallengePageState();
@@ -26,10 +33,20 @@ class _ChallengePageState extends State<ChallengePage> {
     });
   }
 
-  void nextPage() {
-    if(controller.currentQuestion < widget.questions.length){
-        pageController.nextPage(
-        duration: Duration(milliseconds: 200), curve: Curves.linear);
+  void nextPage(bool isRigth) {
+    if(!controller.nextPageRunning){
+      controller.nextPageRunning = true;
+
+      if(isRigth){
+        controller.qtdCurrectAnswers++;
+      }
+
+      if(controller.currentQuestion < widget.questions.length){
+          pageController.nextPage(
+          duration: Duration(milliseconds: 200), curve: Curves.linear);
+      }
+
+      controller.nextPageRunning = false;
     }
   }
 
@@ -59,13 +76,14 @@ class _ChallengePageState extends State<ChallengePage> {
         children: widget.questions
             .map((e) => QuizWidget(
                   question: e,
-                  onChange: () {
+                  onSelected: (isRigth) {
                     Future.delayed(Duration(milliseconds: 1500))
-                        .then((value) => nextPage());
+                        .then((value) => nextPage(isRigth));
                   },
                 ))
             .toList(),
       ),
+
       bottomNavigationBar: SafeArea(
         bottom: true,
         child: Padding(
@@ -79,14 +97,25 @@ class _ChallengePageState extends State<ChallengePage> {
                 Expanded(
                   child: NextButtonWidget.white(
                     label: 'Pular',
-                    onTap: nextPage,
+                    onTap: (){
+                      nextPage(false);
+                    },
                   ),
                 ) :
                 Expanded(
                   child: NextButtonWidget.green(
                     label: 'Finalizar',
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.pushReplacement(
+                        context, 
+                        MaterialPageRoute(
+                          builder: (context) => ResultPage(
+                            title: widget.title,
+                            length: widget.questions.length,
+                            result: controller.qtdCurrectAnswers,
+                          )
+                        )
+                      );
                     },
                   ),
                 )

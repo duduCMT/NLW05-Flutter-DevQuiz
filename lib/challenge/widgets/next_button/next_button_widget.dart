@@ -11,6 +11,7 @@ class NextButtonWidget extends StatelessWidget {
 
   final VoidCallback onTap;
 
+
   const NextButtonWidget({
     Key? key, 
     required this.label, 
@@ -18,12 +19,12 @@ class NextButtonWidget extends StatelessWidget {
     required this.fontColor,
     required this.borderColor, 
     required this.overlayColor,
-    required this.onTap
+    required this.onTap,
   }) : super(key: key);
 
   NextButtonWidget.green({
     required String label,
-    required VoidCallback onTap
+    required VoidCallback onTap,
   }) :
     this.backgroundColor = AppColors.darkGreen,
     this.fontColor = AppColors.white,
@@ -34,12 +35,34 @@ class NextButtonWidget extends StatelessWidget {
 
   NextButtonWidget.white({
     required String label,
-    required VoidCallback onTap
+    required VoidCallback onTap,
   }) :
     this.backgroundColor = AppColors.white,
     this.fontColor = AppColors.grey,
     this.borderColor = AppColors.border,
     this.overlayColor = AppColors.overlayDarkGreen,
+    this.label = label, 
+    this.onTap = onTap;
+
+  NextButtonWidget.purple({
+    required String label,
+    required VoidCallback onTap,
+  }) :
+    this.backgroundColor = AppColors.purple,
+    this.fontColor = AppColors.white,
+    this.borderColor = AppColors.border,
+    this.overlayColor = AppColors.overlayDark,
+    this.label = label, 
+    this.onTap = onTap;
+
+  NextButtonWidget.transparent({
+    required String label,
+    required VoidCallback onTap,
+  }) :
+    this.backgroundColor = Colors.transparent,
+    this.fontColor = AppColors.black,
+    this.borderColor = Colors.transparent,
+    this.overlayColor = AppColors.overlayDark,
     this.label = label, 
     this.onTap = onTap;
 
@@ -70,6 +93,7 @@ class NextButtonWidget extends StatelessWidget {
             color: fontColor
           ),
         ),
+        
       ),
     );
   }
