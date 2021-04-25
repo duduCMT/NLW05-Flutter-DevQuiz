@@ -5,6 +5,7 @@ import 'package:DevQuiz/home/home_state.dart';
 import 'package:DevQuiz/home/widgets/app_bar/app_bar_widget.dart';
 import 'package:DevQuiz/home/widgets/level_button/level_button_widget.dart';
 import 'package:DevQuiz/home/widgets/quiz_card/quiz_card_widget.dart';
+import 'package:DevQuiz/shared/models/quiz_model.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -43,15 +44,19 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   LevelButtonWidget(
                     label: 'Fácil',
+                    onTap: () => controller.getQuizzesByLvl(Level.facil),
                   ),
                   LevelButtonWidget(
                     label: 'Médio',
+                    onTap: () => controller.getQuizzesByLvl(Level.medio),
                   ),
                   LevelButtonWidget(
                     label: 'Difícil',
+                    onTap: () => controller.getQuizzesByLvl(Level.dificil),
                   ),
                   LevelButtonWidget(
                     label: 'Perito',
+                    onTap: () => controller.getQuizzesByLvl(Level.perito),
                   ),
                 ],
               ),

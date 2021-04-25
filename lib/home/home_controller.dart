@@ -16,7 +16,6 @@ class HomeController {
 
   void getUser() async {
     state = HomeState.loading;
-    await Future.delayed(Duration(seconds: 2));
 
     user = await repository.getUser();
 
@@ -25,10 +24,19 @@ class HomeController {
 
   void getQuizzes() async {
     state = HomeState.loading;
-    await Future.delayed(Duration(seconds: 2));
 
     quizzes = await repository.getQuizzes();
 
     state = HomeState.sucess;
+  }
+
+  void getQuizzesByLvl(Level lvl) async {
+    state = HomeState.loading;
+
+    List<QuizModel> buffer = await repository.getQuizzes();
+    
+    quizzes = buffer.where((element) => (element.level == lvl)).toList();
+
+    state = HomeState.sucess;    
   }
 }
